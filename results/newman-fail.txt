@@ -1,0 +1,92 @@
+newman
+
+Lab05 API Testing
+
+→ Setup - Идэвхтэй оюутан үүсгэх
+  PUT http://localhost:3000/students/B231234567 [200 OK, 178B, 77ms]
+
+→ Setup - CS313 хичээл үүсгэх
+  PUT http://localhost:3000/courses/CS313 [200 OK, 178B, 9ms]
+
+→ Happy path - Амжилттай бүртгүүлэх
+  POST http://localhost:3000/registrations [201 Created, 203B, 6ms]
+
+→ Happy path - Амжилттай бүртгүүлэх
+  POST http://localhost:3000/registrations [201 Created, 203B, 4ms]
+  1. Status is 201 Created
+  ✓  Result is OK
+  ✓  Registration ID is a number
+
+→ Negative - Оюутан олдохгүй
+  POST http://localhost:3000/registrations [200 OK, 192B, 4ms]
+  ✓  Status is 200 OK
+  ✓  Student does not exist
+
+→ Negative - Идэвхгүй оюутан
+  POST http://localhost:3000/registrations [200 OK, 198B, 3ms]
+  ✓  Status is 200 OK
+  ✓  Inactive student is rejected
+  ✓  Response time is less than 500ms
+  ✓  Content-Type is application/json
+
+→ Setup - Идэвхгүй оюутан үүсгэх
+  PUT http://localhost:3000/students/B231111111 [200 OK, 178B, 5ms]
+
+→ Negative - Хичээл олдохгүй
+  POST http://localhost:3000/registrations [200 OK, 191B, 5ms]
+  ✓  Status is 200 OK
+  ✓  Course does not exist
+
+→ Setup - Prerequisite дутуу оюутан
+  PUT http://localhost:3000/students/B231234568 [200 OK, 178B, 3ms]
+
+→ Negative - Урьдчилсан нөхцөл хангаагүй
+  POST http://localhost:3000/registrations [200 OK, 215B, 4ms]
+  ✓  Status is 200 OK
+  ✓  Prerequisites are missing
+
+→ Negative - studentID байхгүй
+  POST http://localhost:3000/registrations [400 Bad Request, 202B, 4ms]
+  ✓  Status is 400 Bad Request
+  ✓  Missing studentID is rejected
+
+→ Negative - courseID байхгүй
+  POST http://localhost:3000/registrations [400 Bad Request, 202B, 4ms]
+  ✓  Status is 400 Bad Request
+  ✓  Missing courseID is rejected
+
+→ Setup - Урьдчилсан нөхцөлгүй хичээл
+  PUT http://localhost:3000/courses/CS400 [200 OK, 178B, 3ms]
+
+→ Boundary - Урьдчилсан нөхцөлгүй хичээл
+  POST http://localhost:3000/registrations [201 Created, 203B, 4ms]
+  ✓  Status is 201 Created
+  ✓  Registration succeeds without prerequisites
+
+┌─────────────────────────┬──────────────────┬─────────────────┐
+│                         │         executed │          failed │
+├─────────────────────────┼──────────────────┼─────────────────┤
+│              iterations │                1 │               0 │
+├─────────────────────────┼──────────────────┼─────────────────┤
+│                requests │               14 │               0 │
+├─────────────────────────┼──────────────────┼─────────────────┤
+│            test-scripts │                8 │               0 │
+├─────────────────────────┼──────────────────┼─────────────────┤
+│      prerequest-scripts │                0 │               0 │
+├─────────────────────────┼──────────────────┼─────────────────┤
+│              assertions │               19 │               1 │
+├─────────────────────────┴──────────────────┴─────────────────┤
+│ total run duration: 519ms                                    │
+├──────────────────────────────────────────────────────────────┤
+│ total data received: 384B (approx)                           │
+├──────────────────────────────────────────────────────────────┤
+│ average response time: 9ms [min: 3ms, max: 77ms, s.d.: 18ms] │
+└──────────────────────────────────────────────────────────────┘
+
+[31m  # [39m[31m failure        [39m[31m detail                                                [39m
+[90m    [39m[90m                [39m[90m                                                       [39m
+ 1.  AssertionError  Status is 201 Created                                 
+                     expected response to have status code 200 but got 201 
+                     at assertion:0 in test-script                         
+                     inside "Happy path - Амжилттай бүртгүүлэх"            
+exit=1
