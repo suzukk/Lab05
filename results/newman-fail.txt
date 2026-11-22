@@ -3,85 +3,136 @@ newman
 Lab05 API Testing
 
 → Setup - Идэвхтэй оюутан үүсгэх
-  PUT http://localhost:3000/students/B231234567 [200 OK, 178B, 77ms]
+  PUT http://localhost:3000/students/B231234567 [200 OK, 178B, 105ms]
 
 → Setup - CS313 хичээл үүсгэх
-  PUT http://localhost:3000/courses/CS313 [200 OK, 178B, 9ms]
+  PUT http://localhost:3000/courses/CS313 [200 OK, 178B, 2ms]
 
 → Happy path - Амжилттай бүртгүүлэх
-  POST http://localhost:3000/registrations [201 Created, 203B, 6ms]
+  POST http://localhost:3000/registrations [201 Created, 202B, 2ms]
+
+→ Setup - Идэвхтэй оюутан үүсгэх
+  PUT http://localhost:3000/students/B231234567 [200 OK, 178B, 2ms]
+
+→ Setup - CS313 хичээл үүсгэх
+  PUT http://localhost:3000/courses/CS313 [200 OK, 178B, 2ms]
 
 → Happy path - Амжилттай бүртгүүлэх
-  POST http://localhost:3000/registrations [201 Created, 203B, 4ms]
+  POST http://localhost:3000/registrations [201 Created, 202B, 2ms]
   1. Status is 201 Created
   ✓  Result is OK
   ✓  Registration ID is a number
 
+→ Setup - CS313 хичээл үүсгэх
+  PUT http://localhost:3000/courses/CS313 [200 OK, 178B, 3ms]
+
 → Negative - Оюутан олдохгүй
-  POST http://localhost:3000/registrations [200 OK, 192B, 4ms]
+  POST http://localhost:3000/registrations [200 OK, 192B, 2ms]
   ✓  Status is 200 OK
   ✓  Student does not exist
 
+→ Setup - Идэвхгүй оюутан үүсгэх
+  PUT http://localhost:3000/students/B231111111 [200 OK, 178B, 2ms]
+
+→ Setup - CS313 хичээл үүсгэх
+  PUT http://localhost:3000/courses/CS313 [200 OK, 178B, 2ms]
+
 → Negative - Идэвхгүй оюутан
-  POST http://localhost:3000/registrations [200 OK, 198B, 3ms]
+  POST http://localhost:3000/registrations [200 OK, 198B, 2ms]
   ✓  Status is 200 OK
   ✓  Inactive student is rejected
   ✓  Response time is less than 500ms
   ✓  Content-Type is application/json
 
-→ Setup - Идэвхгүй оюутан үүсгэх
-  PUT http://localhost:3000/students/B231111111 [200 OK, 178B, 5ms]
+→ Setup - Идэвхтэй оюутан үүсгэх
+  PUT http://localhost:3000/students/B231234567 [200 OK, 178B, 2ms]
 
 → Negative - Хичээл олдохгүй
-  POST http://localhost:3000/registrations [200 OK, 191B, 5ms]
+  POST http://localhost:3000/registrations [200 OK, 191B, 1ms]
   ✓  Status is 200 OK
   ✓  Course does not exist
 
 → Setup - Prerequisite дутуу оюутан
-  PUT http://localhost:3000/students/B231234568 [200 OK, 178B, 3ms]
+  PUT http://localhost:3000/students/B231234568 [200 OK, 178B, 1ms]
+
+→ Setup - CS313 хичээл үүсгэх
+  PUT http://localhost:3000/courses/CS313 [200 OK, 178B, 1ms]
 
 → Negative - Урьдчилсан нөхцөл хангаагүй
-  POST http://localhost:3000/registrations [200 OK, 215B, 4ms]
+  POST http://localhost:3000/registrations [200 OK, 215B, 2ms]
   ✓  Status is 200 OK
   ✓  Prerequisites are missing
 
 → Negative - studentID байхгүй
-  POST http://localhost:3000/registrations [400 Bad Request, 202B, 4ms]
+  POST http://localhost:3000/registrations [400 Bad Request, 202B, 1ms]
   ✓  Status is 400 Bad Request
   ✓  Missing studentID is rejected
 
 → Negative - courseID байхгүй
-  POST http://localhost:3000/registrations [400 Bad Request, 202B, 4ms]
+  POST http://localhost:3000/registrations [400 Bad Request, 202B, 1ms]
   ✓  Status is 400 Bad Request
   ✓  Missing courseID is rejected
 
+→ Setup - Идэвхтэй оюутан үүсгэх
+  PUT http://localhost:3000/students/B231234567 [200 OK, 178B, 1ms]
+
 → Setup - Урьдчилсан нөхцөлгүй хичээл
-  PUT http://localhost:3000/courses/CS400 [200 OK, 178B, 3ms]
+  PUT http://localhost:3000/courses/CS400 [200 OK, 178B, 2ms]
 
 → Boundary - Урьдчилсан нөхцөлгүй хичээл
-  POST http://localhost:3000/registrations [201 Created, 203B, 4ms]
+  POST http://localhost:3000/registrations [201 Created, 202B, 2ms]
   ✓  Status is 201 Created
   ✓  Registration succeeds without prerequisites
 
-┌─────────────────────────┬──────────────────┬─────────────────┐
-│                         │         executed │          failed │
-├─────────────────────────┼──────────────────┼─────────────────┤
-│              iterations │                1 │               0 │
-├─────────────────────────┼──────────────────┼─────────────────┤
-│                requests │               14 │               0 │
-├─────────────────────────┼──────────────────┼─────────────────┤
-│            test-scripts │                8 │               0 │
-├─────────────────────────┼──────────────────┼─────────────────┤
-│      prerequest-scripts │                0 │               0 │
-├─────────────────────────┼──────────────────┼─────────────────┤
-│              assertions │               19 │               1 │
-├─────────────────────────┴──────────────────┴─────────────────┤
-│ total run duration: 519ms                                    │
-├──────────────────────────────────────────────────────────────┤
-│ total data received: 384B (approx)                           │
-├──────────────────────────────────────────────────────────────┤
-│ average response time: 9ms [min: 3ms, max: 77ms, s.d.: 18ms] │
-└──────────────────────────────────────────────────────────────┘
+→ Double fault - studentID байхгүй ба courseID буруу
+  POST http://localhost:3000/registrations [400 Bad Request, 202B, 3ms]
+  ✓  Expected HTTP status
+  ✓  Expected result: ERROR_BAD_REQUEST
+
+→ Double fault - Оюутан ба хичээл байхгүй
+  POST http://localhost:3000/registrations [200 OK, 192B, 2ms]
+  ✓  Expected HTTP status
+  ✓  Expected result: ERROR_NO_STUDENT
+
+→ Setup - Double fault inactive student
+  PUT http://localhost:3000/students/B231111112 [200 OK, 178B, 2ms]
+
+→ Double fault - Идэвхгүй оюутан ба хичээл байхгүй
+  POST http://localhost:3000/registrations [200 OK, 198B, 2ms]
+  ✓  Expected HTTP status
+  ✓  Expected result: ERROR_INACTIVE_STUDENT
+
+→ Setup - Partially completed prerequisites student
+  PUT http://localhost:3000/students/B231234569 [200 OK, 178B, 2ms]
+
+→ Setup - Course with two prerequisites
+  PUT http://localhost:3000/courses/CS500 [200 OK, 178B, 2ms]
+
+→ Equivalence - Prerequisite хэсэгчлэн судалсан
+  POST http://localhost:3000/registrations [200 OK, 215B, 2ms]
+  ✓  Expected HTTP status
+  ✓  Expected result: ERROR_PREREQUISITES
+  ✓  Missing prerequisite is identified
+
+┌─────────────────────────┬──────────────────┬──────────────────┐
+│                         │         executed │           failed │
+├─────────────────────────┼──────────────────┼──────────────────┤
+│              iterations │                1 │                0 │
+├─────────────────────────┼──────────────────┼──────────────────┤
+│                requests │               28 │                0 │
+├─────────────────────────┼──────────────────┼──────────────────┤
+│            test-scripts │               12 │                0 │
+├─────────────────────────┼──────────────────┼──────────────────┤
+│      prerequest-scripts │                0 │                0 │
+├─────────────────────────┼──────────────────┼──────────────────┤
+│              assertions │               28 │                1 │
+├─────────────────────────┴──────────────────┴──────────────────┤
+│ total run duration: 538ms                                     │
+├───────────────────────────────────────────────────────────────┤
+│ total data received: 677B (approx)                            │
+├───────────────────────────────────────────────────────────────┤
+│ average response time: 5ms [min: 1ms, max: 105ms, s.d.: 19ms] │
+└───────────────────────────────────────────────────────────────┘
 
 [31m  # [39m[31m failure        [39m[31m detail                                                [39m
 [90m    [39m[90m                [39m[90m                                                       [39m
@@ -89,4 +140,3 @@ Lab05 API Testing
                      expected response to have status code 200 but got 201 
                      at assertion:0 in test-script                         
                      inside "Happy path - Амжилттай бүртгүүлэх"            
-exit=1
